@@ -1,0 +1,98 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Création d'un compte utilisateur - Trajet Facile</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/css/application.css" th:href="@{/css/application.css}"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+
+<div th:replace="layout :: navbarFragment"/>
+<section class="section">
+    <div class="container">
+        <form action="#" th:action="@{/ride}" th:object="${offerARideForm}"
+              method="post">
+            <table>
+                <tr>
+                    <td>Ville de départ</td>
+                    <td><input type="text" th:field="*{fromCity}"/></td>
+                    <td th:if="${#fields.hasErrors('fromCity')}" th:errors="*{fromCity}"/>
+                </tr>
+                <tr>
+                    <td>Ville d'arrivée:</td>
+                    <td><input type="text" th:field="*{toCity}"/></td>
+                    <td th:if="${#fields.hasErrors('toCity')}" th:errors="*{toCity}"/>
+                </tr>
+                <tr>
+                    <td>Jour de départ:</td>
+                    <td><input type="date" th:field="*{startDate}"/></td>
+                    <td th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"/>
+                </tr>
+                <tr>
+                    <td>Horaire de départ:</td>
+                    <td><input type="number" th:field="*{startHours}"/></td>
+                    <td><input type="number" th:field="*{startMinutes}"/></td>
+                    <td th:if="${#fields.hasErrors('startHours')}" th:errors="*{startHours}"/>
+                    <td th:if="${#fields.hasErrors('startMinutes')}" th:errors="*{startMinutes}"/>
+                </tr>
+                <tr>
+                    <td>Nombre de places</td>
+                    <td><input type="number" th:field="*{seats}"/></td>
+                    <td th:if="${#fields.hasErrors('seats')}" th:errors="*{seats}"/>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Proposer un trajet</button>
+                    </td>
+                </tr>
+            </table>
+            <div th:if="${ride != null}" class="message-info">
+                Le trajet pour <span th:text="${ride.toCity}"/> a bien été pris en compte
+            </div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#fromCity, #toCity').each(
+            function (i, el) {
+                el = $(el);
+                el.autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "/api/city",
+                            data: {"search": el.val()},
+                            success: function (data) {
+                                var transformed = $.map(data, function (el) {
+                                    return {
+                                        label: el.name,
+                                        id: el.name
+                                    };
+                                });
+                                response(transformed);
+                            },
+                            error: function () {
+                                response([]);
+                            }
+                        });
+                    }
+                })
+            });
+    })
+    ;
+
+</script>
+</body>
+
+</html>

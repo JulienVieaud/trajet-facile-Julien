@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+
+    <meta charset="UTF-8"/>
+    <title>Trajet Facile</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/css/application.css" th:href="@{/css/application.css}"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"/>
+
+</head>
+<body>
+
+<div th:replace="layout :: navbarFragment"/>
+<section class="section">
+    <div class="container">
+        <form th:action="@{/login}" method="post">
+            <div class="columns is-centered">
+                <div class="column is-one-quarter">
+
+                    <div class="field">
+                        <label class="label"> User Name</label>
+                        <div class="control">
+                            <input class="input" type="text" name="username"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label"> Password</label>
+                        <div class="control">
+                            <input class="input" type="password" name="password"/>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-one-quarter">
+                    <input class="button is-primary is-medium is-fullwidth" type="submit" value="Sign In"/>
+                </div>
+            </div>
+            <div class="columns is-centered">
+                <div class="column is-one-quarter is-">
+
+                    <article class="message is-primary" th:if="${param.error} or ${param.logout}">
+                        <!--<div class="message-header">-->
+                            <!--<p>Information</p>-->
+                        <!--</div>-->
+                        <div class="message-body">
+                            <div th:if="${param.error}">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}">
+                                You have been logged out.
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

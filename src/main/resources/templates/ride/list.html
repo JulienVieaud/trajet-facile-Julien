@@ -1,0 +1,70 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8"/>
+    <title>Trajet Facile</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/css/application.css" th:href="@{/css/application.css}"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/poe-websocket.js"></script>
+
+</head>
+
+<body>
+<div th:replace="layout :: navbarFragment">&nbsp;</div>
+<section class="section">
+    <div class="container">
+        <div class="columns ">
+            <div class="column is-one-quarter">
+
+                <form class="form" action="#" th:action="@{/ride/search}" method="get">
+                    <div class="field">
+                        <div class="control">
+                            <div class="label">
+                                Rechercher
+                            </div>
+                            <input class="input" id="search" name="search" th:value="${search}"
+                                   placeholder="Ville de départ ou d'arrivée..."/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <input class="button is-primary" type="submit" value="Rechercher"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="column is-three-quarter">
+                <table id="ridesTab" class="table is-fullwidth">
+                    <tr>
+                        <th>Départ</th>
+                        <th>Arrivée</th>
+                        <th>Nombre de places</th>
+                        <th>Prix</th>
+                    </tr>
+                    <div th:replace="ride/rides :: rides(${rides})"/>
+                </table>
+
+                <div th:if="${message!= null} and ${!message.isEmpty()}" class="message-info">
+                    <div th:if="${message!= null} and ${!message.isEmpty()}" class="notification is-alert">
+                        <span th:if="${message!= null}" th:text="${message}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+
+</html>

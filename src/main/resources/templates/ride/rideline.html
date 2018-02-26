@@ -1,0 +1,13 @@
+<div th:fragment="rideline(ride)">
+    <form th:id="'form' + ${ride.id}" th:action="@{/book}" th:object="${bookARideForm}"
+          th:method="POST">
+        <input type="hidden" th:value="${ride.id}" name="rideId" th:id="rideId"/>
+        <td th:text="${ride.fromCity}"/>
+        <td th:text="${ride.toCity}"/>
+        <td th:text="${ride.seats}"/>
+        <td th:text="${ride.cost}"/>
+        <td>
+            <button type="submit" class="button is-info">je vais là!</button>
+        </td>
+    </form>
+</div>

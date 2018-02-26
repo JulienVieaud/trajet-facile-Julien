@@ -1,0 +1,12 @@
+<tr>
+    <th>Départ</th>
+    <th>Arrivée</th>
+    <th>Nombre de places</th>
+    <th>Prix</th>
+</tr>
+<div th:fragment="rides(rides)">
+    <tr th:each="ride : ${rides}">
+        <div th:replace="ride/rideline :: rideline(${ride})"/>
+    </tr>
+</div>
+

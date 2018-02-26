@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+
+<body>
+
+<nav class="navbar is-info" role="navigation" aria-label="main navigation" th:fragment="navbarFragment">
+    <div class="navbar-brand">
+        <a class="navbar-item" th:href="@{/}">
+            Trajet Facile
+        </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+        <div class="navbar-start">
+
+            <a class="navbar-item" th:href="@{/ride}">
+                Proposer un trajet
+            </a>
+            <a class="navbar-item" th:href="@{/ride/list}">
+                Réserver un trajet
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <a class="navbar-item" th:href="@{/signup}" th:if="${#httpServletRequest.remoteUser == null}">
+                Inscription
+            </a>
+
+            <a class="navbar-item" th:href="@{/logout}" th:if="${#httpServletRequest.remoteUser != null}">
+                <span th:text="${#authentication.getPrincipal().getUsername()}"></span> - Déconnexion
+            </a>
+
+            <a class="navbar-item" th:href="@{/login}" th:if="${#httpServletRequest.remoteUser == null}">
+                Connexion
+            </a>
+        </div>
+
+    </div>
+</nav>
+</body>
+</html>

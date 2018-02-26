@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: linksFragment">
+    <title>Création d'un compte utilisateur - Trajet Facile</title>
+</head>
+<body>
+
+<!--Injection du menu-->
+<div th:replace="layout :: navbarFragment">
+</div>
+
+
+<section class="section">
+    <div class="container">
+        <form class="form" action="#" th:action="@{/signup}" th:object="${userCreationForm}"
+              method="post">
+            <table>
+                <tr>
+                    <td>Login:</td>
+                    <td><input type="text" th:field="*{login}"
+                               th:classappend="${#fields.hasErrors('login') || duplicateLoginError != null} ? error : good "/>
+                    </td>
+                    <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}"/>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" th:field="*{password}"
+                               th:classappend="${#fields.hasErrors('password')} ? error : good "/></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Sign up!</button>
+                    </td>
+                </tr>
+            </table>
+            <div th:text="${duplicateLoginError}"></div>
+            <div class="notification" th:if="${user != null}">
+                Bienvenue <span th:text="${user}"/> !!
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
