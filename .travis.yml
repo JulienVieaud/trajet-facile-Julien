@@ -3,6 +3,7 @@ jdk:
   - oraclejdk8
 install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-- mvn clean compile sonar  -Dsonar.organization=julienvieaud-github  -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=6797431fccca94052808f417abe431df31e85fab
 script:
 - mvn test
+install:
+- mvn clean compile sonar  -Dsonar.organization=julienvieaud-github  -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=6797431fccca94052808f417abe431df31e85fab
